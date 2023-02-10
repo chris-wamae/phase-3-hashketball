@@ -1,3 +1,5 @@
+require './hashketball.rb'
+require "pry"
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,85 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player_name)
+game_hash.each{|location, team_data| team_data.each{|attribute, data|
+    if attribute == :players
+    data.each{|data_item|
+    if data_item[:player_name] == player_name
+        return data_item[:points]
+    end
+  }
+  end
+}
+}
+    end
+
+    def shoe_size(player_name)
+      game_hash.each{|location, team_data| team_data.each{|attribute, data|
+          if attribute == :players
+          data.each{|data_item|
+          if data_item[:player_name] == player_name
+              return data_item[:shoe]
+          end
+        }
+        end
+      }
+      }
+          end
+
+
+def team_colors team_name
+game_hash.each do |location, attribute|
+if attribute[:team_name] == team_name
+  return attribute[:colors]
+  end
+end
+end
+
+def team_names 
+  all_teams = []
+  game_hash.each do |location,attribute|
+    all_teams << attribute[:team_name]
+  end
+  all_teams
+end
+
+def player_numbers team_name
+  jersey_numbers = []
+  game_hash.each do |location,attribute|
+    if attribute[:team_name] == team_name
+      attribute[:players].each do |player_object|
+    jersey_numbers << player_object[:number]
+      end
+    end
+end
+ jersey_numbers
+end
+
+def player_stats players_name
+   game_hash.each do |location,attribute|
+    attribute.each do |team_attributes,team_data|
+      if team_attributes == :players
+        team_data.each_with_index do |player_attribute,index|
+          if player_attribute[:player_name] ==  players_name
+            return  team_data[index]
+          end
+           end
+        end
+     end
+    end
+  end
+player_stats("Kemba Walker")
+
+def big_shoe_rebounds 
+  game_hash.each do |location,attributes|
+    attributes.each do |team_attributes,team_data|
+      if team_attributes == :players
+       sorted_array = team_data.sort {|a, b| b[:shoe] <=> a[:shoe]}
+      return sorted_array[0][:rebounds]
+    end
+  end
+end
+end
+big_shoe_rebounds 
